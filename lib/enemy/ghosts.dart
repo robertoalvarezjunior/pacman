@@ -15,8 +15,11 @@ class Ghost extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
   final Future<SpriteAnimation> runRight;
   final Future<SpriteAnimation> runLeft;
   final Future<SpriteAnimation> runUp;
-  final Future<SpriteAnimation> runDown;
+  Future<SpriteAnimation> runDown;
   final Vector2 pos;
+
+  double ghostSpeed = 58;
+
   Ghost({
     required this.pos,
     required this.idleRight,
@@ -37,10 +40,9 @@ class Ghost extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
             runRight: runRight,
             runLeft: runLeft,
             runUp: runUp,
-            runDown: runRight,
+            runDown: runDown,
           ),
           life: 1,
-          speed: 60,
           size: Vector2(16, 16),
           initDirection: Direction.up,
         ) {
@@ -75,16 +77,20 @@ class Ghost extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
   @override
   void update(double dt) {
     super.update(dt);
+    _moveToPlayer(dt);
+  }
+
+  void _moveToPlayer(dt) {
     seeAndMoveToPlayer(
-      closePlayer: (player) {
-        speed = 60.8;
+      observed: () {
+        speed = ghostSpeed;
       },
+      closePlayer: (player) {},
       radiusVision: 32 * 5,
       notObserved: () {
         runRandomMovement(
           dt,
-          runOnlyVisibleInCamera: true,
-          speed: 60,
+          speed: ghostSpeed,
           timeKeepStopped: 0,
           maxDistance: 32 * 10,
           minDistance: random(32, 64),

@@ -7,6 +7,7 @@ import 'package:pacman/enemy/red_ghost.dart';
 import 'package:pacman/pacman/player_sprite_sheet.dart';
 
 class Pacman extends SimplePlayer with ObjectCollision {
+  //static double pacmanSpeed = 62;
   Pacman(Vector2 position)
       : super(
           position: position,
@@ -21,7 +22,7 @@ class Pacman extends SimplePlayer with ObjectCollision {
             runDown: PlayerSpriteSheet.runDown,
           ),
           size: Vector2(18, 18),
-          speed: 60,
+          speed: 62,
           initDirection: Direction.right,
           life: 1,
         ) {

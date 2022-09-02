@@ -6,6 +6,7 @@ import 'package:pacman/enemy/pink_ghost.dart';
 import 'package:pacman/enemy/purple_ghost.dart';
 import 'package:pacman/enemy/red_ghost.dart';
 import 'package:pacman/pacman/pacman.dart';
+import 'package:pacman/pill/power_pill/power_pill.dart';
 
 class ScreenGame extends StatefulWidget {
   const ScreenGame({Key? key}) : super(key: key);
@@ -22,13 +23,14 @@ class _ScreenGameState extends State<ScreenGame> {
       child: Scaffold(
         body: BonfireWidget(
           joystick: Joystick(
-              keyboardConfig: KeyboardConfig(
-                enable: true,
-                keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows,
-              ),
-              directional: JoystickDirectional(
-                isFixed: false,
-              )),
+            keyboardConfig: KeyboardConfig(
+              enable: true,
+              keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows,
+            ),
+            directional: JoystickDirectional(
+              isFixed: false,
+            ),
+          ),
           map: WorldMapByTiled(
             'tiled/background.json',
             forceTileSize: Vector2(32, 32),
@@ -38,6 +40,7 @@ class _ScreenGameState extends State<ScreenGame> {
               'pink_ghost': (properties) => PinkGhost(properties.position),
               'purple_ghost': (properties) => PurpleGhost(properties.position),
               'red_ghost': (properties) => RedGhost(properties.position),
+              'power_pill': (properties) => PowerPill(properties.position),
             },
           ),
           player: Pacman(
