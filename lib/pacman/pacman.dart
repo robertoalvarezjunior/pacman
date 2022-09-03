@@ -5,6 +5,7 @@ import 'package:pacman/enemy/pink_ghost.dart';
 import 'package:pacman/enemy/purple_ghost.dart';
 import 'package:pacman/enemy/red_ghost.dart';
 import 'package:pacman/pacman/player_sprite_sheet.dart';
+import 'package:pacman/pill/power_pill/power_pill.dart';
 
 class Pacman extends SimplePlayer with ObjectCollision {
   //static double pacmanSpeed = 62;
@@ -41,12 +42,14 @@ class Pacman extends SimplePlayer with ObjectCollision {
 
   @override
   bool onCollision(GameComponent component, bool active) {
-    if (component is RedGhost ||
-        component is BlueGhost ||
-        component is PinkGhost ||
-        component is OrangeGhost ||
-        component is PurpleGhost) {
-      die();
+    if (PowerPill.col == false) {
+      if (component is RedGhost ||
+          component is BlueGhost ||
+          component is PinkGhost ||
+          component is OrangeGhost ||
+          component is PurpleGhost) {
+        die();
+      }
     }
     return super.onCollision(component, active);
   }

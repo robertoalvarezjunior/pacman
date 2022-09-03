@@ -1,6 +1,6 @@
 import 'package:bonfire/bonfire.dart';
-import 'package:pacman/enemy/ghosts.dart';
 import 'package:pacman/enemy/enemySheet/red_sprite_sheet.dart';
+import 'package:pacman/enemy/ghosts.dart';
 
 class RedGhost extends Ghost {
   RedGhost(Vector2 position)
@@ -12,7 +12,7 @@ class RedGhost extends Ghost {
           idleDown: RedSpriteSheet.idleDown,
           runRight: RedSpriteSheet.runRight,
           runLeft: RedSpriteSheet.runLeft,
-          runUp: RedSpriteSheet.runUp,
+          runUp: RedSpriteSheet.fun,
           runDown: RedSpriteSheet.runDown,
         );
 }

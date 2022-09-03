@@ -1,4 +1,6 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:pacman/enemy/enemySheet/scared_sprite_sheet.dart';
+import 'package:pacman/pill/power_pill/power_pill.dart';
 
 class RedSpriteSheet {
   static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
@@ -73,4 +75,7 @@ class RedSpriteSheet {
           texturePosition: Vector2(0, 32),
         ),
       );
+
+  static get fun =>
+      PowerPill.col == false ? RedSpriteSheet.runUp : ScaredSriteSheet.scared;
 }

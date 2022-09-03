@@ -2,10 +2,13 @@ import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:pacman/enemy/blue_ghost.dart';
+import 'package:pacman/enemy/enemySheet/scared_sprite_sheet.dart';
 import 'package:pacman/enemy/orange_ghost.dart';
 import 'package:pacman/enemy/pink_ghost.dart';
 import 'package:pacman/enemy/purple_ghost.dart';
 import 'package:pacman/enemy/red_ghost.dart';
+import 'package:pacman/pacman/pacman.dart';
+import 'package:pacman/pill/power_pill/power_pill.dart';
 
 class Ghost extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
   final Future<SpriteAnimation> idleRight;
@@ -42,9 +45,8 @@ class Ghost extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
             runUp: runUp,
             runDown: runDown,
           ),
-          life: 1,
           size: Vector2(16, 16),
-          initDirection: Direction.up,
+          life: 10,
         ) {
     setupCollision(
       CollisionConfig(
@@ -67,7 +69,22 @@ class Ghost extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
         component is PurpleGhost) {
       return active = false;
     }
+    if (PowerPill.col == true) {
+      animation?.playOnce(
+        ScaredSriteSheet.scared,
+        runToTheEnd: true,
+      );
+      if (component is Pacman) {
+        die();
+      }
+    }
     return super.onCollision(component, active);
+  }
+
+  @override
+  void die() {
+    removeFromParent();
+    super.die();
   }
 
   int random(min, max) {
@@ -81,22 +98,32 @@ class Ghost extends SimpleEnemy with ObjectCollision, AutomaticRandomMovement {
   }
 
   void _moveToPlayer(dt) {
-    seeAndMoveToPlayer(
-      observed: () {
-        speed = ghostSpeed;
-      },
-      closePlayer: (player) {},
-      radiusVision: 32 * 5,
-      notObserved: () {
-        runRandomMovement(
-          dt,
-          speed: ghostSpeed,
-          timeKeepStopped: 0,
-          maxDistance: 32 * 10,
-          minDistance: random(32, 64),
-        );
-      },
-      margin: 0,
-    );
+    if (PowerPill.col == false) {
+      seeAndMoveToPlayer(
+        observed: () {
+          speed = ghostSpeed;
+        },
+        closePlayer: (player) {},
+        radiusVision: 32 * 5,
+        notObserved: () {
+          runRandomMovement(
+            dt,
+            speed: ghostSpeed,
+            timeKeepStopped: 0,
+            maxDistance: 32 * 10,
+            minDistance: random(32, 64),
+          );
+        },
+        margin: 0,
+      );
+    } else {
+      runRandomMovement(
+        dt,
+        speed: ghostSpeed,
+        timeKeepStopped: 0,
+        maxDistance: 32 * 10,
+        minDistance: random(32, 64),
+      );
+    }
   }
 }

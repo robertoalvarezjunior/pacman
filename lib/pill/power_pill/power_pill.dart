@@ -10,7 +10,7 @@ class PowerPill extends GameDecoration with Sensor {
           size: Vector2(32, 32),
         ) {
     setupSensorArea(
-      intervalCheck: 10,
+      intervalCheck: 0,
       areaSensor: [
         CollisionArea.circle(
           radius: 4,
@@ -20,22 +20,24 @@ class PowerPill extends GameDecoration with Sensor {
     );
   }
 
+  static bool col = false;
+
   @override
   void onContact(GameComponent component) {
     if (component is Pacman) {
       removeFromParent();
-      //_pacmanSpeed();
+      _pacmanSpeed();
     }
   }
 
   @override
   void onContactExit(GameComponent component) {}
 
-  // _pacmanSpeed() {
-  //   Pacman.pacmanSpeed = 600;
-  //   Future.delayed(
-  //     const Duration(seconds: 10),
-  //     () => Pacman.pacmanSpeed = 62,
-  //   );
-  // }
+  _pacmanSpeed() {
+    PowerPill.col = true;
+    Future.delayed(
+      const Duration(milliseconds: 10000),
+      () => PowerPill.col = false,
+    );
+  }
 }
