@@ -1,8 +1,8 @@
 # pacman
 
-Jogo simples do pacman usando a biblioteca bonfire
+## Jogo simples do pacman usando a biblioteca bonfire, pode ser executado baixando o apk que esta no arquivo <a href='https://github.com/robertoalvarezjunior/pacman/tree/main/apk'>APK</a> (apenas para android), ou clonando este repositório e emular o aplicativo.
 
-## Pacman
+
 
 <div align="center">
 <img src="assets/images/1.png" width="400px" />
