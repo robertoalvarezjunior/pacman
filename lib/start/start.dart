@@ -23,7 +23,7 @@ class _StartState extends State<Start> {
                 ));
           },
           style: ElevatedButton.styleFrom(
-            primary: Colors.white,
+            backgroundColor: Colors.white,
           ),
           child: const Text(
             'Play',
