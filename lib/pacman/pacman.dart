@@ -1,15 +1,18 @@
 import 'package:bonfire/bonfire.dart';
-import 'package:pacman/enemy/blue_ghost.dart';
+import 'package:flutter/material.dart';
 import 'package:pacman/enemy/orange_ghost.dart';
 import 'package:pacman/enemy/pink_ghost.dart';
-import 'package:pacman/enemy/purple_ghost.dart';
 import 'package:pacman/enemy/red_ghost.dart';
+import 'package:pacman/interface/score.dart';
 import 'package:pacman/pacman/player_sprite_sheet.dart';
+import 'package:pacman/pill/pill.dart';
 import 'package:pacman/pill/power_pill/power_pill.dart';
+import 'package:pacman/screen/screen_game.dart';
 
 class Pacman extends SimplePlayer with ObjectCollision {
-  //static double pacmanSpeed = 62;
-  Pacman(Vector2 position)
+  static int vida = 2;
+  final BuildContext cont;
+  Pacman(Vector2 position, {required this.cont})
       : super(
           position: position,
           animation: SimpleDirectionAnimation(
@@ -44,10 +47,8 @@ class Pacman extends SimplePlayer with ObjectCollision {
   bool onCollision(GameComponent component, bool active) {
     if (PowerPill.col == false) {
       if (component is RedGhost ||
-          component is BlueGhost ||
           component is PinkGhost ||
-          component is OrangeGhost ||
-          component is PurpleGhost) {
+          component is OrangeGhost) {
         die();
       }
     }
@@ -56,7 +57,44 @@ class Pacman extends SimplePlayer with ObjectCollision {
 
   @override
   void die() {
-    removeFromParent();
     super.die();
+    removeFromParent();
+    _navigate(cont);
+    Score.score = 0;
+    Pacman.vida -= 1;
+  }
+
+  @override
+  void update(double dt) {
+    if (Pill.pill == 0) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            content: Text('Ganhou'),
+          );
+        },
+      );
+    }
+    if (Pacman.vida <= 0) {
+      showDialog(
+        context: cont,
+        builder: (cont) {
+          return const AlertDialog(
+            content: Text('Game Over'),
+          );
+        },
+      );
+    }
+    super.update(dt);
+  }
+
+  void _navigate(cont) {
+    Navigator.push(
+      cont,
+      MaterialPageRoute(
+        builder: (cont) => const ScreenGame(),
+      ),
+    );
   }
 }

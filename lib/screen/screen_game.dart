@@ -1,11 +1,11 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'package:pacman/enemy/blue_ghost.dart';
 import 'package:pacman/enemy/orange_ghost.dart';
 import 'package:pacman/enemy/pink_ghost.dart';
-import 'package:pacman/enemy/purple_ghost.dart';
 import 'package:pacman/enemy/red_ghost.dart';
+import 'package:pacman/interface/score.dart';
 import 'package:pacman/pacman/pacman.dart';
+import 'package:pacman/pill/pill.dart';
 import 'package:pacman/pill/power_pill/power_pill.dart';
 
 class ScreenGame extends StatefulWidget {
@@ -35,15 +35,19 @@ class _ScreenGameState extends State<ScreenGame> {
             'tiled/background.json',
             forceTileSize: Vector2(32, 32),
             objectsBuilder: {
-              'blue_ghost': (properties) => BlueGhost(properties.position),
               'orange_ghost': (properties) => OrangeGhost(properties.position),
               'pink_ghost': (properties) => PinkGhost(properties.position),
-              'purple_ghost': (properties) => PurpleGhost(properties.position),
               'red_ghost': (properties) => RedGhost(properties.position),
               'power_pill': (properties) => PowerPill(properties.position),
+              'pill': (properties) => Pill(properties.position),
             },
           ),
+          overlayBuilderMap: {
+            Score.overlayKey: (context, game) => Score(game: game),
+          },
+          initialActiveOverlays: const [Score.overlayKey],
           player: Pacman(
+            cont: context,
             Vector2(2 * tileSize, 20 * 32.4),
           ),
           cameraConfig: CameraConfig(

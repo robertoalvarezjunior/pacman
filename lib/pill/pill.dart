@@ -3,43 +3,35 @@ import 'package:pacman/interface/score.dart';
 import 'package:pacman/pacman/pacman.dart';
 import 'package:pacman/pill/pill_sprite_sheet.dart';
 
-class PowerPill extends GameDecoration with Sensor {
-  PowerPill(Vector2 position)
+class Pill extends GameDecoration with Sensor {
+  static int pill = 69;
+
+  Pill(Vector2 position)
       : super.withSprite(
-          sprite: PillSpriteSheet.powerPill,
+          sprite: PillSpriteSheet.pill,
           position: position,
-          size: Vector2(32, 32),
+          size: Vector2(16, 16),
         ) {
     setupSensorArea(
       intervalCheck: 0,
       areaSensor: [
         CollisionArea.circle(
-          radius: 4,
-          align: Vector2(12, 12),
+          radius: 2,
+          align: Vector2(6, 6),
         ),
       ],
     );
   }
 
-  static bool col = false;
-
   @override
   void onContact(GameComponent component) {
     if (component is Pacman) {
-      Score.score += 100;
+      Score.score += 10;
+      Pill.pill -= 1;
       removeFromParent();
-      _pacmanSpeed();
     }
   }
 
   @override
   void onContactExit(GameComponent component) {}
-
-  _pacmanSpeed() {
-    PowerPill.col = true;
-    Future.delayed(
-      const Duration(milliseconds: 10000),
-      () => PowerPill.col = false,
-    );
-  }
 }

@@ -12,7 +12,7 @@ class RedGhost extends Ghost {
           idleDown: RedSpriteSheet.idleDown,
           runRight: RedSpriteSheet.runRight,
           runLeft: RedSpriteSheet.runLeft,
-          runUp: RedSpriteSheet.fun,
+          runUp: RedSpriteSheet.runUp,
           runDown: RedSpriteSheet.runDown,
         );
 }
